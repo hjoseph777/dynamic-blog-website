@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Post - My Blog</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="new-post">
+    <header>
+        <h1>New Blog Post</h1>
+        <nav>
+            <a href="index.html">Home</a>
+        </nav>
+    </header>
+    <main>
+        <form id="new-post-form">
+            <div class="form-group">
+                <label for="post-title">Title:</label>
+                <input type="text" id="post-title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="post-content">Content:</label>
+                <textarea id="post-content" name="content" rows="10" required></textarea>
+            </div>
+            <button type="submit">Save Post</button>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2024 Harry's Blog</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
