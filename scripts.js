@@ -8,7 +8,7 @@ function getPosts() {
     }
 }
 
-// Save posts to storage
+
 function savePosts(posts) {
     localStorage.setItem('posts', JSON.stringify(posts));
 }
@@ -19,7 +19,7 @@ function getQueryParam(param) {
     return urlParams.get(param);
 }
 
-// Page Load Handler
+
 document.addEventListener('DOMContentLoaded', function () {
     var currentPage = document.body.getAttribute('data-page');
 
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// INDEX PAGE FUNCTIONS
+
 function displayPosts() {
     var posts = getPosts();
     var postsContainer = document.getElementById('posts-container');
@@ -63,7 +63,6 @@ function displayPosts() {
         postsContainer.appendChild(postElement);
     });
 
-    // Add event listeners for delete buttons
     document.querySelectorAll('.delete-post').forEach(function (button) {
         button.addEventListener('click', function () {
             var postId = this.getAttribute('data-id');
@@ -158,7 +157,7 @@ function deletePost(postId) {
         // Save updated posts
         savePosts(posts);
 
-        // Check which page we're on
+       
         var currentPage = document.body.getAttribute('data-page');
         
         // Handle redirect based on current page
