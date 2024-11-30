@@ -60,3 +60,21 @@ button.delete-btn {
 button.delete-btn:hover {
     background-color: #d32f2f;
 }
+
+
+
+/* Project Gallery Styles */
+#project-gallery {
+    margin-top: 30px;
+}
+
+.project {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.project-details {
+    margin-top: 10px;
+    display: none;
+}

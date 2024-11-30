@@ -17,11 +17,28 @@
         <div id="posts-container">
             <!-- Blog posts will be dynamically loaded here -->
         </div>
+        <section id="project-gallery">
+            <h2>Project Gallery</h2>
+            <div class="project" id="project1">
+                <h3>Project 1</h3>
+                <button class="show-details" data-project="1">Show Details</button>
+                <div class="project-details" id="details1" style="display: none;">
+                    <p>Details about Project 1...</p>
+                </div>
+            </div>
+            <div class="project" id="project2">
+                <h3>Project 2</h3>
+                <button class="show-details" data-project="2">Show Details</button>
+                <div class="project-details" id="details2" style="display: none;">
+                    <p>Details about Project 2...</p>
+                </div>
+            </div>
+            <!-- Add more projects as needed -->
+        </section>
     </main>
     <footer>
         <p>&copy; 2023 My Blog</p>
     </footer>
-
-    <script src="scripts.js"></script>
+    <script src="scripts.js" defer></script>
 </body>
 </html>

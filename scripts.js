@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (currentPage === 'index') {
         displayPosts();
+        initializeProjectGallery();
     } else if (currentPage === 'new-post') {
         initializeNewPost();
     } else if (currentPage === 'view-post') {
@@ -35,6 +36,36 @@ document.addEventListener('DOMContentLoaded', function () {
         initializeEditPost();
     }
 });
+
+function initializeProjectGallery() {
+    document.querySelectorAll('.show-details').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var projectId = this.getAttribute('data-project');
+            var details = document.getElementById('details' + projectId);
+            if (details.style.display === 'none') {
+                details.style.display = 'block';
+                this.textContent = 'Hide Details';
+            } else {
+                details.style.display = 'none';
+                this.textContent = 'Show Details';
+            }
+        });
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function displayPosts() {
