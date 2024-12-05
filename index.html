@@ -105,23 +105,23 @@
         .contact-form {
             width: 100%;
             max-width: 600px;
-            margin: 20px auto; 
-            text-align: center; 
+            margin: 20px auto; /* Adjusted margin to make the form more visible */
+            text-align: center; /* Center the form content */
         }
         .contact-form label {
             display: block;
-            margin-top: 2px; 
-            text-align: left; 
-            font-size: 0.9em; 
+            margin-top: 2px; /* Further adjusted margin */
+            text-align: left; /* Align labels to the left */
+            font-size: 0.9em; /* Reduced font size */
         }
         .contact-form input, .contact-form textarea {
-            width: 90%; 
+            width: 90%; /* Adjusted width */
             padding: 8px;
-            margin-top: 2px; 
+            margin-top: 2px; /* Further adjusted margin */
             box-sizing: border-box;
         }
         .contact-form button {
-            margin-top: 6px; 
+            margin-top: 6px; /* Further adjusted margin */
             padding: 10px 15px;
             background-color: #4CAF50;
             color: white;
@@ -131,7 +131,7 @@
             transition: background-color 0.3s ease;
         }
         .contact-form h2 {
-            font-size: 1.2em; 
+            font-size: 1.2em; /* Reduced font size */
         }
         footer {
             text-align: center;
@@ -149,8 +149,8 @@
             right: 10px;
         }
         #blog-form, #project-gallery {
-            overflow-y: auto; 
-            max-height: 400px; 
+            overflow-y: auto; /* Add vertical scroll bar */
+            max-height: 400px; /* Set a maximum height for the form */
         }
         .project-card h5 {
             margin-bottom: 0;
@@ -158,7 +158,7 @@
         .project-card {
             margin-bottom: 10px;
             border-bottom: 1px solid #ddd;
-            padding-bottom: 5px; 
+            padding-bottom: 5px;  /* reduced from 10px */
         }
         .details-container.hidden {
             display: none !important;
@@ -166,7 +166,7 @@
         .theme-selector {
             position: absolute;
             top: 10px;
-            left: 10px;
+            left: 10px; /* Moved to the top left */
             background: #fff;
             color: #333;
             border: none;
@@ -244,20 +244,20 @@
             opacity: 0.9;
         }
 
-        
+        /* Update the toggle state appearance */
         .btn-toggle[data-state="hidden"] {
             background-color: #2196F3;
         }
 
         .btn-toggle[data-state="shown"] {
-            background-color: #607D8B;
+            background-color: #607D8B;  /* Different color when details are shown */
         }
 
         .form-control[type="textarea"],
         textarea.form-control {
-            resize: both;
+            resize: both; /* Allow both vertical and horizontal resizing */
             min-height: 100px;
-            min-width: 200px;
+            min-width: 200px; /* Add minimum width */
             transition: height 0.1s ease, width 0.1s ease;
             overflow: auto; /* Ensure scrollbars appear when needed */
         }
@@ -280,9 +280,12 @@
     <main>
         <div class="content">
             <div class="main-content">
+                <!-- Blog Form Section -->
                 <section id="blog-form" class="section">
                     <h2>Blog Form</h2>
-                    <div id="blog-posts"></div>
+                    <div id="blog-posts">
+                        <!-- Blog posts will be displayed here -->
+                    </div>
                 </section>
 
                 <section id="about" class="section">
@@ -295,8 +298,10 @@
                     
                     <div id="project1" class="project-card">
                         <h5>PROJECT 1:</h5>
+                        <!--<p class="project-summary">A dynamic website with blog functionality, geolocation features, and theme customization.</p> -->
                         <button id="toggleDetailsBtn1" class="btn btn-view">Show Details</button>
                         <div id="detailsContainer1" class="details-container hidden">
+                            <!-- Existing input groups with added descriptions -->
                             <div class="input-group">
                                 <label for="projectName1">Project Name</label>
                                 <input type="text" id="projectName1" class="form-control" value="Dynamic Blog Website" placeholder="Enter project name">
@@ -327,8 +332,10 @@
                 
                     <div id="project2" class="project-card">
                         <h5>PROJECT 2: </h5>
+                        <!--<p class="project-summary">Real-time form data persistence with visual feedback and state management.</p> -->
                         <button id="toggleDetailsBtn2" class="btn btn-view">Show Details</button>
                         <div id="detailsContainer2" class="details-container hidden">
+                            <!-- Existing input groups with added descriptions -->
                             <div class="input-group">
                                 <label for="projectName2">Project Name</label>
                                 <input type="text" id="projectName2" class="form-control" value="Auto-Save Implementation" placeholder="Enter project name">
@@ -377,18 +384,23 @@
     <footer>
         <p>&copy; 2023 My Blog</p>
     </footer>
-    <script async 
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_IkgjuhD22pw0jivJwnFOeg9N5sejTO8&callback=initMap&libraries=maps,marker&v=beta">
-      // Google script provided by Google. The `callback` parameter is required.
-    </script>
+    <!-- Google Maps API and  Custom Scripts -->
     <script src="scripts.js" defer></script>
-    <script src="geolocation.js" defer></script>
+    <script type="module" src="geolocation.js" defer></script>
     <script src="project-details.js" defer></script>
+    <script type="module">
+        import API_KEYS from './config.js';
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEYS.GOOGLE_MAPS}&callback=initMap&libraries=maps,marker&v=beta`;
+        script.async = true;
+        document.head.appendChild(script);
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const blogPostsContainer = document.getElementById('blog-posts');
             const coordinates = document.getElementById('coordinates');
 
+            // Function to retrieve posts from local storage
             function getPosts() {
                 const posts = localStorage.getItem('posts');
                 return posts ? JSON.parse(posts) : [];
@@ -401,7 +413,7 @@
                 postElement.classList.add('blog-post');
                 postElement.innerHTML = `
                     <h3>${post.title}</h3>
-                    <p>${post.content.substring(0, 15)}...</p>
+                    <p>${post.content.substring(0, 15)}...</p> <!-- Show a preview of the content limited to 15 characters -->
                     <div class="actions">
                         <button class="btn btn-view" onclick="window.location.href='view-post.html?id=${post.id}'">Read More</button>
                         <button class="btn btn-edit" onclick="window.location.href='edit-post.html?id=${post.id}'">Edit</button>
@@ -411,6 +423,7 @@
                 blogPostsContainer.appendChild(postElement);
             });
 
+            // Function to handle post deletion
             window.deletePost = function(postId) {
                 let posts = getPosts();
                 posts = posts.filter(p => p.id != postId);
@@ -418,6 +431,7 @@
                 location.reload();
             };
 
+            // Theme selection functionality
             const themeSelector = document.getElementById('theme-selector');
             const savedTheme = localStorage.getItem('theme') || 'default';
             document.body.className = savedTheme;
@@ -429,11 +443,26 @@
                 localStorage.setItem('theme', theme);
             });
 
+            // Clear session storage on exit
             window.addEventListener('beforeunload', function() {
                 sessionStorage.removeItem('geolocationPrompted');
                 sessionStorage.removeItem('geolocationEnabled');
             });
 
+            // Remove these event listeners as they're now handled in project-details.js
+            // const toggleDetailsBtn1 = document.getElementById('toggleDetailsBtn1');
+            // const detailsContainer1 = document.getElementById('detailsContainer1');
+            // toggleDetailsBtn1.addEventListener('click', function() {
+            //     detailsContainer1.classList.toggle('hidden');
+            // });
+
+            // const toggleDetailsBtn2 = document.getElementById('toggleDetailsBtn2');
+            // const detailsContainer2 = document.getElementById('detailsContainer2');
+            // toggleDetailsBtn2.addEventListener('click', function() {
+            //     detailsContainer2.classList.toggle('hidden');
+            // });
+
+            // Update toggle buttons to handle state
             const toggleBtns = document.querySelectorAll('.btn-toggle');
             toggleBtns.forEach(btn => {
                 btn.setAttribute('data-state', 'hidden');

@@ -1,3 +1,5 @@
+import API_KEYS from './config.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const addressInfo = document.getElementById('address-info');
     const coordinates = document.getElementById('coordinates');
@@ -49,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch address using reverse geocoding
     function fetchAddress(latitude, longitude) {
-        const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyA_IkgjuhD22pw0jivJwnFOeg9N5sejTO8`;
+        const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEYS.GOOGLE_MAPS}`;
         fetch(geocodeUrl)
             .then(response => response.json())
             .then(data => {
