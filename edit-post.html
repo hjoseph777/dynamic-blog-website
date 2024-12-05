@@ -2,10 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Post - My Blog</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="blog-shared.css">
+    <style>
+        body.default {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        body.light {
+            background-color: #fff;
+            color: #000;
+        }
+        body.grey {
+            background-color: #808080;
+            color: #fff;
+        }
+        body.beige {
+            background-color: #F5F5DC;
+            color: #333;
+        }
+        .theme-selector {
+            position: absolute;
+            top: 30px; /* Adjusted position */
+            left: 30px; /* Adjusted position */
+            background: #fff;
+            color: #333;
+            border: none;
+            padding: 5px;
+            border-radius: 4px;
+            cursor: not-allowed; /* Indicate that the selector is disabled */
+        }
+    </style>
 </head>
-<body data-page="edit-post">
+<body data-page="edit-post" class="default">
     <header>
         <h1>Edit Blog Post</h1>
         <nav>
@@ -14,22 +46,44 @@
         </nav>
     </header>
     <main>
-        <form id="edit-post-form">
-            <div class="form-group">
-                <label for="post-title">Title:</label>
-                <input type="text" id="post-title" name="title" required>
-            </div>
-            <div class="form-group">
-                <label for="post-content">Content:</label>
-                <textarea id="post-content" name="content" rows="10" required></textarea>
-            </div>
-            <button type="submit">Update Post</button>
-        </form>
+        <div class="form-container">
+            <form id="edit-post-form">
+                <div class="form-group">
+                    <label for="post-title">Title:</label>
+                    <input type="text" id="post-title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="post-content">Content:</label>
+                    <textarea id="post-content" name="content" rows="10" required></textarea>
+                </div>
+                <button type="submit">Update Post</button>
+            </form>
+        </div>
     </main>
     <footer>
         <p>&copy; 2023 My Blog</p>
     </footer>
 
     <script src="scripts.js"></script>
+    <script src="geolocation.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'default';
+            document.body.className = savedTheme;
+
+            const themeSelector = document.createElement('select');
+            themeSelector.id = 'theme-selector';
+            themeSelector.className = 'theme-selector';
+            themeSelector.disabled = true; // Disable the theme selector
+            themeSelector.innerHTML = `
+                <option value="default">Default</option>
+                <option value="light">Light</option>
+                <option value="grey">Grey</option>
+                <option value="beige">Beige</option>
+            `;
+            document.body.appendChild(themeSelector);
+            themeSelector.value = savedTheme;
+        });
+    </script>
 </body>
 </html>

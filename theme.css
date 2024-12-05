@@ -1,0 +1,64 @@
+body.default {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+body.dark {
+    background-color: #333;
+    color: #fff;
+}
+
+body.light {
+    background-color: #fff;
+    color: #000;
+}
+
+body.grey {
+    background-color: #808080;
+    color: #fff;
+}
+
+body.dark .blog-post,
+body.dark .section h2,
+body.dark .section p,
+body.dark .contact-form label,
+body.dark #project1 h3,
+body.dark #project2 h3,
+body.dark #address {
+    color: #fff;
+}
+
+body.light .blog-post,
+body.light .section h2,
+body.light .section p,
+body.light .contact-form label,
+body.light #project1 h3,
+body.light #project2 h3,
+body.light #address {
+    color: #000;
+}
+
+body.grey .blog-post,
+body.grey .section h2,
+body.grey .section p,
+body.grey .contact-form label,
+body.grey #project1 h3,
+body.grey #project2 h3,
+body.grey #address {
+    color: #fff;
+}
+
+body.beige {
+    background-color: #F5F5DC;
+    color: #333;
+}
+
+body.beige .blog-post,
+body.beige .section h2,
+body.beige .section p,
+body.beige .contact-form label,
+body.beige #project1 h3,
+body.beige #project2 h3,
+body.beige #address {
+    color: #333;
+}

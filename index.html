@@ -2,26 +2,448 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Blog Homepage</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            overflow-x: auto; /* Ensure horizontal scroll bar shows up */
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            position: relative;
+        }
+        nav a {
+            color: #fff;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        .map-container {
+            width: 30%;
+            float: right;
+            margin-left: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+        .location-info {
+            background-color: #f4f4f4;
+            padding: 15px;
+            text-align: center;
+        }
+        .location-details {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+        .location-detail {
+            background-color: #ffffff;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .location-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .location-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .location-btn:hover {
+            background-color: #45a049;
+        }
+        .error-message {
+            color: red;
+        }
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .main-content {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .address-info {
+            margin-top: 10px;
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .section {
+            margin: 20px 0;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .project {
+            margin-bottom: 20px;
+        }
+        .project-details {
+            display: none;
+        }
+        .contact-form {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto; 
+            text-align: center; 
+        }
+        .contact-form label {
+            display: block;
+            margin-top: 2px; 
+            text-align: left; 
+            font-size: 0.9em; 
+        }
+        .contact-form input, .contact-form textarea {
+            width: 90%; 
+            padding: 8px;
+            margin-top: 2px; 
+            box-sizing: border-box;
+        }
+        .contact-form button {
+            margin-top: 6px; 
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .contact-form h2 {
+            font-size: 1.2em; 
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #333;
+            color: #fff;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        #coordinates {
+            color: white;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        #blog-form, #project-gallery {
+            overflow-y: auto; 
+            max-height: 400px; 
+        }
+        .project-card h5 {
+            margin-bottom: 0;
+        }
+        .project-card {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px; 
+        }
+        .details-container.hidden {
+            display: none !important;
+        }
+        .theme-selector {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #fff;
+            color: #333;
+            border: none;
+            padding: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        body.default {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        body.beige {
+            background-color: #F5F5DC;
+            color: #333;
+        }
+        body.light {
+            background-color: #fff;
+            color: #333;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .details-container {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        /* Button styles consistent with view-post.html */
+        .btn {
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 0 5px;
+        }
+
+        .btn-edit {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-delete {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn-view {
+            background-color: #2196F3;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Update blog post actions styling */
+        .blog-post .actions {
+            display: flex;
+            justify-content: flex-start;
+            gap: 0.5rem;
+            margin-top: 10px;
+        }
+
+        /* Add specific styling for toggle buttons */
+        .btn-toggle {
+            background-color: #2196F3;  /* Same as btn-view */
+            color: white;
+        }
+
+        .btn-toggle:hover {
+            opacity: 0.9;
+        }
+
+        
+        .btn-toggle[data-state="hidden"] {
+            background-color: #2196F3;
+        }
+
+        .btn-toggle[data-state="shown"] {
+            background-color: #607D8B;
+        }
+
+        .form-control[type="textarea"],
+        textarea.form-control {
+            resize: both;
+            min-height: 100px;
+            min-width: 200px;
+            transition: height 0.1s ease, width 0.1s ease;
+            overflow: auto; /* Ensure scrollbars appear when needed */
+        }
+    </style>
 </head>
-<body data-page="index">
+<body data-page="index" class="default">
     <header>
         <h1>My Blog</h1>
         <nav>
             <a href="index.html">Home</a>
             <a href="new-post.html">New Post</a>
         </nav>
+        <p id="coordinates">Fetching location...</p>
+        <select id="theme-selector" class="theme-selector">
+            <option value="default">Default</option>
+            <option value="beige">Beige</option>
+            <option value="light">Light</option>
+        </select>
     </header>
     <main>
-        <div id="posts-container">
-            <!-- Blog posts will be dynamically loaded here -->
+        <div class="content">
+            <div class="main-content">
+                <section id="blog-form" class="section">
+                    <h2>Blog Form</h2>
+                    <div id="blog-posts"></div>
+                </section>
+
+                <section id="about" class="section">
+                    <h2>About</h2>
+                    <p>Welcome to My Blog! Here you can find various posts and projects that I have worked on. Feel free to explore and contact me if you have any questions.</p>
+                </section>
+
+                <section id="project-gallery" class="section">
+                    <h2 style="margin-top: 0; padding-top: 0;">Project Gallery</h2>
+                    
+                    <div id="project1" class="project-card">
+                        <h5>PROJECT 1:</h5>
+                        <button id="toggleDetailsBtn1" class="btn btn-view">Show Details</button>
+                        <div id="detailsContainer1" class="details-container hidden">
+                            <div class="input-group">
+                                <label for="projectName1">Project Name</label>
+                                <input type="text" id="projectName1" class="form-control" value="Dynamic Blog Website" placeholder="Enter project name">
+                            </div>
+                            <div class="input-group">
+                                <label for="projectDescription1">Description</label>
+                                <textarea id="projectDescription1" class="form-control" placeholder="Enter project description">Key Features:
+- Blog post creation and management
+- Geolocation integration
+- Theme customization
+- Contact form
+- Local storage implementation</textarea>
+                            </div>
+                            <div class="input-group">
+                                <label for="projectDate1">Project Date</label>
+                                <input type="date" id="projectDate1" class="form-control">
+                            </div>
+                            <div class="input-group">
+                                <label for="projectStatus1">Project Status</label>
+                                <select id="projectStatus1" class="form-control">
+                                    <option value="completed">Completed</option>
+                                    <option value="in-progress">In Progress</option>
+                                    <option value="planning">Planning</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div id="project2" class="project-card">
+                        <h5>PROJECT 2: </h5>
+                        <button id="toggleDetailsBtn2" class="btn btn-view">Show Details</button>
+                        <div id="detailsContainer2" class="details-container hidden">
+                            <div class="input-group">
+                                <label for="projectName2">Project Name</label>
+                                <input type="text" id="projectName2" class="form-control" value="Auto-Save Implementation" placeholder="Enter project name">
+                            </div>
+                            <div class="input-group">
+                                <label for="projectDescription2">Description</label>
+                                <textarea id="projectDescription2" class="form-control" placeholder="Enter project description">Key Features:
+</textarea>
+                            </div>
+                            <div class="input-group">
+                                <label for="projectDate2">Project Date</label>
+                                <input type="date" id="projectDate2" class="form-control">
+                            </div>
+                            <div class="input-group">
+                                <label for="projectStatus2">Project Status</label>
+                                <select id="projectStatus2" class="form-control">
+                                    <option value="completed">Completed</option>
+                                    <option value="in-progress">In Progress</option>
+                                    <option value="planning">Planning</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="map-container">
+                <div id="map"></div>
+                <div id="address-info" class="address-info">
+                    <p id="address">Fetching address...</p>
+                </div>
+                <section class="contact-form section" style="margin-top: 10px;">
+                    <h2>Contact Us</h2>
+                    <form id="contactForm">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" required></textarea>
+                        <button type="submit">Submit</button>
+                    </form>
+                </section>
+            </div>
         </div>
     </main>
     <footer>
         <p>&copy; 2023 My Blog</p>
     </footer>
+    <script async 
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_IkgjuhD22pw0jivJwnFOeg9N5sejTO8&callback=initMap&libraries=maps,marker&v=beta">
+      // Google script provided by Google. The `callback` parameter is required.
+    </script>
+    <script src="scripts.js" defer></script>
+    <script src="geolocation.js" defer></script>
+    <script src="project-details.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const blogPostsContainer = document.getElementById('blog-posts');
+            const coordinates = document.getElementById('coordinates');
 
-    <script src="scripts.js"></script>
+            function getPosts() {
+                const posts = localStorage.getItem('posts');
+                return posts ? JSON.parse(posts) : [];
+            }
+
+            const posts = getPosts();
+
+            posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.classList.add('blog-post');
+                postElement.innerHTML = `
+                    <h3>${post.title}</h3>
+                    <p>${post.content.substring(0, 15)}...</p>
+                    <div class="actions">
+                        <button class="btn btn-view" onclick="window.location.href='view-post.html?id=${post.id}'">Read More</button>
+                        <button class="btn btn-edit" onclick="window.location.href='edit-post.html?id=${post.id}'">Edit</button>
+                        <button class="btn btn-delete" onclick="deletePost(${post.id})">Delete</button>
+                    </div>
+                `;
+                blogPostsContainer.appendChild(postElement);
+            });
+
+            window.deletePost = function(postId) {
+                let posts = getPosts();
+                posts = posts.filter(p => p.id != postId);
+                localStorage.setItem('posts', JSON.stringify(posts));
+                location.reload();
+            };
+
+            const themeSelector = document.getElementById('theme-selector');
+            const savedTheme = localStorage.getItem('theme') || 'default';
+            document.body.className = savedTheme;
+            themeSelector.value = savedTheme;
+
+            themeSelector.addEventListener('change', function() {
+                const theme = themeSelector.value;
+                document.body.className = theme;
+                localStorage.setItem('theme', theme);
+            });
+
+            window.addEventListener('beforeunload', function() {
+                sessionStorage.removeItem('geolocationPrompted');
+                sessionStorage.removeItem('geolocationEnabled');
+            });
+
+            const toggleBtns = document.querySelectorAll('.btn-toggle');
+            toggleBtns.forEach(btn => {
+                btn.setAttribute('data-state', 'hidden');
+                btn.addEventListener('click', function() {
+                    const isHidden = this.getAttribute('data-state') === 'hidden';
+                    this.textContent = isHidden ? 'Hide Details' : 'Show Details';
+                    this.setAttribute('data-state', isHidden ? 'shown' : 'hidden');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
